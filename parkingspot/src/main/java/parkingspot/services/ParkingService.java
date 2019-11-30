@@ -1,0 +1,27 @@
+/**
+ * 
+ */
+package parkingspot.services;
+
+import java.util.Optional;
+
+import parkingspot.exception.ParkingException;
+import parkingspot.entities.Vehicle;
+
+
+public interface ParkingService
+{
+	/* ---- Actions ----- */
+	public void createParkingLot(int level, int capacity) throws ParkingException;
+	
+	public Optional<Integer> park(int level, Vehicle vehicle) throws ParkingException;
+	
+	public void unPark(int level, int slotNumber) throws ParkingException;
+	
+	public void getStatus(int level) throws ParkingException;
+	
+	public Optional<Integer> getAvailableSlotsCount(int level) throws ParkingException;
+	
+
+	public void doCleanup();
+}
