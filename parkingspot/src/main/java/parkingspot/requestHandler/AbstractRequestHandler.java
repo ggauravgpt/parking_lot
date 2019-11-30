@@ -5,7 +5,7 @@ package parkingspot.requestHandler;
 
 import parkingspot.constants.CommandInputMap;
 import parkingspot.exception.ParkingException;
-import parkingspot.service.ParkingService;
+import parkingspot.services.ParkingService;
 
 
 public interface AbstractRequestHandler

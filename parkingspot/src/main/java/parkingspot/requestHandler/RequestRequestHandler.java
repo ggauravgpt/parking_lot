@@ -6,14 +6,16 @@ package parkingspot.requestHandler;
 import parkingspot.constants.Constants;
 import parkingspot.exception.ErrorCode;
 import parkingspot.exception.ParkingException;
+import parkingspot.services.ParkingService;
+import parkingspot.services.SearchingService;
 import parkingspot.entities.Car;
-
-import parkingspot.service.ParkingService;
 
 
 public class RequestRequestHandler implements AbstractRequestHandler
 {
 	private ParkingService parkingService;
+	private SearchingService searchingService;
+	
 	
 	public void setParkingService(ParkingService parkingService) throws ParkingException
 	{
@@ -58,13 +60,13 @@ public class RequestRequestHandler implements AbstractRequestHandler
 				parkingService.getStatus(level);
 				break;
 			case Constants.REG_NUMBER_FOR_CARS_WITH_COLOR:
-				parkingService.getRegNumberForColor(level, inputs[1]);
+				searchingService.getRegNumberForColor(level, inputs[1]);
 				break;
 			case Constants.SLOTS_NUMBER_FOR_CARS_WITH_COLOR:
-				parkingService.getSlotNumbersFromColor(level, inputs[1]);
+				searchingService.getSlotNumbersFromColor(level, inputs[1]);
 				break;
 			case Constants.SLOTS_NUMBER_FOR_REG_NUMBER:
-				parkingService.getSlotNoFromRegistrationNo(level, inputs[1]);
+				searchingService.getSlotNoFromRegistrationNo(level, inputs[1]);
 				break;
 			default:
 				break;
