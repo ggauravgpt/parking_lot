@@ -2,10 +2,11 @@
 arg1=$1
 
 dir=target
-
-jar_name=parking_spot-1.0-SNAPSHOT.jar
+chmod -R 777 target
+jar_name=parkingspot-0.0.1-SNAPSHOT.jar
 
 mvn clean install 
+chmod -R 777 target
 
 if [ -z "$1" ] ; then
         java -jar $dir/$jar_name
