@@ -1,7 +1,7 @@
 /**
  * 
  */
-package parkingspot.model.strategy;
+package parkingspot.entities.strategy;
 
 import java.util.TreeSet;
 

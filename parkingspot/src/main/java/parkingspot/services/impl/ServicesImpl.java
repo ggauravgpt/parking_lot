@@ -15,8 +15,8 @@ import parkingspot.dao.impl.MemoryParkingManager;
 import parkingspot.exception.ErrorCode;
 import parkingspot.exception.ParkingException;
 import parkingspot.entities.Vehicle;
-import parkingspot.model.strategy.NearestFirstParkingStrategy;
-import parkingspot.model.strategy.ParkingStrategy;
+import parkingspot.entities.strategy.NearestFirstParkingStrategy;
+import parkingspot.entities.strategy.ParkingStrategy;
 import parkingspot.services.ParkingService;
 
 

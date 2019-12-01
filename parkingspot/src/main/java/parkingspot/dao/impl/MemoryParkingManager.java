@@ -8,10 +8,10 @@ import java.util.List;
 import java.util.Map;
 
 import parkingspot.entities.Vehicle;
+import parkingspot.entities.strategy.NearestFirstParkingStrategy;
+import parkingspot.entities.strategy.ParkingStrategy;
 import parkingspot.dao.ParkingDataManager;
 import parkingspot.dao.ParkingLevelDataManager;
-import parkingspot.model.strategy.NearestFirstParkingStrategy;
-import parkingspot.model.strategy.ParkingStrategy;
 
  //* This class is a singleton class to manage the data of parking system
 

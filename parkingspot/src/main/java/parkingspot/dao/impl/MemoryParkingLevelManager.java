@@ -11,10 +11,10 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import parkingspot.entities.Vehicle;
+import parkingspot.entities.strategy.NearestFirstParkingStrategy;
+import parkingspot.entities.strategy.ParkingStrategy;
 import parkingspot.constants.Constants;
 import parkingspot.dao.ParkingLevelDataManager;
-import parkingspot.model.strategy.NearestFirstParkingStrategy;
-import parkingspot.model.strategy.ParkingStrategy;
 
 
  // This class is a singleton class to manage the data of parking system
@@ -78,7 +78,8 @@ public class MemoryParkingLevelManager<T extends Vehicle> implements ParkingLeve
 		else
 		{
 			availableSlot = parkingStrategy.getSlot();
-			if (slotVehicleMap.containsValue(Optional.of(vehicle)))
+//			if (slotVehicleMap.containsValue(Optional.of(vehicle)))
+			if(getSlotNoFromRegistrationNo(vehicle.getRegistrationNo())>0)
 				return Constants.VEHICLE_ALREADY_EXIST;
 			
 			slotVehicleMap.put(availableSlot, Optional.of(vehicle));
