@@ -10,7 +10,7 @@ import parkingspot.exception.ErrorCode;
 import parkingspot.exception.ParkingException;
 import parkingspot.requestHandler.AbstractRequestHandler;
 import parkingspot.requestHandler.RequestRequestHandler;
-import parkingspot.services.impl.ParkingServiceImpl;
+import parkingspot.services.impl.ServicesImpl;
 import parkingspot.main.PrintConsole;
 
 
@@ -19,7 +19,7 @@ public class Main
 	public static void main(String[] args)
 	{
 		AbstractRequestHandler handler = new RequestRequestHandler();
-		handler.setService(new ParkingServiceImpl());
+		handler.setService(new ServicesImpl());
 		BufferedReader bufferReader = null;
 		String input = null;
 		try
