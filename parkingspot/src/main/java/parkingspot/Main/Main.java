@@ -25,7 +25,8 @@ public class Main
 		try
 		{
 			System.out.println("\n\n\n\n\n");
-			System.out.println("===================================================================");
+			System.out.println("=====================================================");
+			System.out.println("=====================Welcome=========================");
 			
 			
 			PrintConsole.printUsage();
@@ -33,7 +34,7 @@ public class Main
 			{
 				case 0: // Interactive: command-line input/output
 				{
-					System.out.println("Please Enter 'exit' to end Execution");
+				//	System.out.println("Please Enter 'exit or 0' to end Execution");
 					System.out.println("Input:");
 					while (true)
 					{
@@ -41,7 +42,7 @@ public class Main
 						{
 							bufferReader = new BufferedReader(new InputStreamReader(System.in));
 							input = bufferReader.readLine().trim();
-							if (input.equalsIgnoreCase("exit"))
+							if (input.equalsIgnoreCase("exit")|| input.equalsIgnoreCase("0"))
 							{
 								break;
 							}
