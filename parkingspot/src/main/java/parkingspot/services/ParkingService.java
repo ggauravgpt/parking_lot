@@ -22,6 +22,11 @@ public interface ParkingService
 	
 	public Optional<Integer> getAvailableSlotsCount(int level) throws ParkingException;
 	
+	public void getRegNumberForColor(int level, String color) throws ParkingException;
+	
+	public void getSlotNumbersFromColor(int level, String colour) throws ParkingException;
+	
+	public int getSlotNoFromRegistrationNo(int level, String registrationNo) throws ParkingException;
 
 	public void doCleanup();
 }
