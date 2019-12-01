@@ -3,7 +3,7 @@ arg1=$1
 
 dir=target
 chmod -R 777 target
-jar_name=parkingspot-0.0.1-SNAPSHOT.jar
+jar_name=parking_lot-0.0.1-SNAPSHOT.jar
 
 mvn clean install 
 chmod -R 777 target
