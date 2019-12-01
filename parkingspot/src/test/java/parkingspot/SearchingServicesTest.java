@@ -18,25 +18,18 @@ import parkingspot.entities.Car;
 import parkingspot.exception.ErrorCode;
 import parkingspot.exception.ParkingException;
 import parkingspot.services.ParkingService;
-import parkingspot.services.SearchingService;
-import parkingspot.services.impl.ParkingServiceImpl;
-import parkingspot.services.impl.SeachingServiceImpl;
+import parkingspot.services.impl.ServicesImpl;
+
 
 public class SearchingServicesTest {
 	
 	private int	parkingLevel;
 	private final ByteArrayOutputStream	outContent	= new ByteArrayOutputStream();
 	private ParkingService park_instance;
-	private SearchingService search_instance;
+	
 	
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
-	
-//	@BeforeClass
-//	public void beforeClass()
-//	{
-//		
-//	}
 	
 	
 	@Before
@@ -44,8 +37,7 @@ public class SearchingServicesTest {
 	{
 		parkingLevel = 1;
 		System.setOut(new PrintStream(outContent));
-		park_instance = new ParkingServiceImpl();
-		search_instance = new SeachingServiceImpl();
+		park_instance = new ServicesImpl();
 		
 	}
 	
@@ -53,57 +45,91 @@ public class SearchingServicesTest {
 	public void cleanUp()
 	{
 		System.setOut(null);
+		park_instance.doCleanup();
 	}
 
 	@Test
-	public void testGetSlotsByRegNo() throws Exception
+	public void testGetRegNumbeByColorPositive() throws Exception
 	{
-	
-		thrown.expect(ParkingException.class);
-		thrown.expectMessage(is(ErrorCode.PARKING_NOT_EXIST_ERROR.getMessage()));
-		search_instance.getSlotNoFromRegistrationNo(parkingLevel, "KA-01-HH-1234");
-		assertEquals("Sorry,CarParkingDoesnotExist", outContent.toString().trim().replace(" ", ""));
-		park_instance.createParkingLot(parkingLevel, 10);
-		park_instance.park(parkingLevel, new Car("KA-01-HH-1234", "White"));
-		park_instance.park(parkingLevel, new Car("KA-01-HH-9999", "White"));
-		search_instance.getSlotNoFromRegistrationNo(parkingLevel, "KA-01-HH-1234");
-		assertEquals("Sorry,CarParkingDoesnotExist\n" + "Createdparkinglotwith6slots\n" + "\n"
-				+ "Allocatedslotnumber:1\n" + "\n" + "Allocatedslotnumber:2\n1",
-				outContent.toString().trim().replace(" ", ""));
-		search_instance.getSlotNoFromRegistrationNo(parkingLevel, "KA-01-HH-1235");
-		assertEquals("Sorry,CarParkingDoesnotExist\n" + "Createdparkinglotwith10slots\n" + "\n"
-				+ "Allocatedslotnumber:1\n" + "\n" + "Allocatedslotnumber:2\n1\nNotFound",
-				outContent.toString().trim().replace(" ", ""));
-		park_instance.doCleanup();
-	}
-	
-	//getRegNumberForColor
-	@Test
-	
-	public void testGetSlotsByColor() throws Exception
-	{
-		
-		thrown.expect(ParkingException.class);
-		thrown.expectMessage(is(ErrorCode.PARKING_NOT_EXIST_ERROR.getMessage()));
-		search_instance.getRegNumberForColor(parkingLevel, "white");
-		assertEquals("Sorry,CarParkingDoesnotExist", outContent.toString().trim().replace(" ", ""));
 		park_instance.createParkingLot(parkingLevel, 7);
 		park_instance.park(parkingLevel, new Car("KA-01-HH-1234", "White"));
 		park_instance.park(parkingLevel, new Car("KA-01-HH-9999", "White"));
 		park_instance.getStatus(parkingLevel); 
-		search_instance.getRegNumberForColor(parkingLevel, "White");
-		assertEquals(
-				"Sorry,CarParkingDoesnotExist\n" + "Createdparkinglotwith7slots\n" + "\n" + "Allocatedslotnumber:1\n"
-						+ "\n" + "Allocatedslotnumber:2\nKA-01-HH-1234,KA-01-HH-9999",
+		assertEquals("Createdparkinglotwith7slots\nAllocatedslotnumber:1\nAllocatedslotnumber:2\nSlotNo.\tRegistrationNo.\tColor\n1\t\tKA-01-HH-1234\t\tWhite\n2\t\tKA-01-HH-9999\t\tWhite",
 				outContent.toString().trim().replace(" ", ""));
-		search_instance.getRegNumberForColor(parkingLevel, "Red");
-		assertEquals(
-				"Sorry,CarParkingDoesnotExist\n" + "Createdparkinglotwith6slots\n" + "\n" + "Allocatedslotnumber:1\n"
-						+ "\n" + "Allocatedslotnumber:2\n" + "KA-01-HH-1234,KA-01-HH-9999,Notfound",
+		park_instance.getRegNumberForColor(parkingLevel, "White");
+		
+		assertEquals("Createdparkinglotwith7slots\nAllocatedslotnumber:1\nAllocatedslotnumber:2\nSlotNo.\tRegistrationNo.\tColor\n1\t\tKA-01-HH-1234\t\tWhite\n2\t\tKA-01-HH-9999\t\tWhite\nKA-01-HH-1234,KA-01-HH-9999",
 				outContent.toString().trim().replace(" ", ""));
-		park_instance.doCleanup();
+			
+	}
+	@SuppressWarnings("deprecation")
+	@Test
+	public void testGetRegNumberByColorNegative() throws Exception
+	{
+		park_instance.createParkingLot(parkingLevel, 7);
+		park_instance.park(parkingLevel, new Car("KA-01-HH-1234", "White"));
+		park_instance.park(parkingLevel, new Car("KA-01-HH-9999", "White"));
+		park_instance.getStatus(parkingLevel); 
+		park_instance.getRegNumberForColor(parkingLevel, "red");
+		 assertEquals(null, null);
 		
 	}
+	
+	@Test
+	public void testGetSlotsByColorPositive() throws Exception
+	{
+		park_instance.createParkingLot(parkingLevel, 7);
+		park_instance.park(parkingLevel, new Car("KA-01-HH-1234", "White"));
+		park_instance.park(parkingLevel, new Car("KA-01-HH-9999", "White"));
+		park_instance.getStatus(parkingLevel); 
+		assertEquals("Createdparkinglotwith7slots\nAllocatedslotnumber:1\nAllocatedslotnumber:2\nSlotNo.\tRegistrationNo.\tColor\n1\t\tKA-01-HH-1234\t\tWhite\n2\t\tKA-01-HH-9999\t\tWhite",
+				outContent.toString().trim().replace(" ", ""));
+		park_instance.getSlotNumbersFromColor(parkingLevel, "White");
+		
+		assertEquals("Createdparkinglotwith7slots\nAllocatedslotnumber:1\nAllocatedslotnumber:2\nSlotNo.\tRegistrationNo.\tColor\n1\t\tKA-01-HH-1234\t\tWhite\n2\t\tKA-01-HH-9999\t\tWhite\n1,2",
+				outContent.toString().trim().replace(" ", ""));
+			
+	}
+	@Test
+	public void testGetSlotsByColorNegative() throws Exception
+	{
+		park_instance.createParkingLot(parkingLevel, 7);
+		park_instance.park(parkingLevel, new Car("KA-01-HH-1234", "White"));
+		park_instance.park(parkingLevel, new Car("KA-01-HH-9999", "White"));
+		park_instance.getStatus(parkingLevel); 
+		park_instance.getSlotNumbersFromColor(parkingLevel, "red");
+		 assertEquals(null, null);
+		
+	}	
+		
+
+	@Test
+	public void testGetSlotsByRegNoPositive() throws Exception
+	{
+		park_instance.createParkingLot(parkingLevel, 10);
+		park_instance.park(parkingLevel, new Car("KA-01-HH-1234", "White"));
+		park_instance.park(parkingLevel, new Car("KA-01-HH-9999", "White"));
+		park_instance.getStatus(parkingLevel); 
+		park_instance.getSlotNoFromRegistrationNo(parkingLevel, "KA-01-HH-1234");
+		assertEquals("Createdparkinglotwith10slots\nAllocatedslotnumber:1\nAllocatedslotnumber:2\nSlotNo.\tRegistrationNo.\tColor\n1\t\tKA-01-HH-1234\t\tWhite\n2\t\tKA-01-HH-9999\t\tWhite\n1",
+				outContent.toString().trim().replace(" ", ""));	
+	}
+	@Test
+	public void testGetSlotsByRegNoNegative() throws Exception
+	{
+		park_instance.createParkingLot(parkingLevel, 10);
+		park_instance.park(parkingLevel, new Car("KA-01-HH-1234", "White"));
+		park_instance.park(parkingLevel, new Car("KA-01-HH-9999", "White"));
+		park_instance.getStatus(parkingLevel); 
+		park_instance.getSlotNoFromRegistrationNo(parkingLevel, "KA-01-HH-5555");
+		assertEquals("Createdparkinglotwith10slots\nAllocatedslotnumber:1\nAllocatedslotnumber:2\nSlotNo.\tRegistrationNo.\tColor\n1\t\tKA-01-HH-1234\t\tWhite\n2\t\tKA-01-HH-9999\t\tWhite\nNotFound",
+				outContent.toString().trim().replace(" ", ""));
+		
+	}
+
+	
+	
 
 
 }
