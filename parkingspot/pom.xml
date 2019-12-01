@@ -39,7 +39,7 @@
 					<archive>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<mainClass>parkingspot.main</mainClass>
+							<mainClass>parkingspot.main.Main</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
